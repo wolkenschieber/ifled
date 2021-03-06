@@ -209,7 +209,7 @@ int main(int argc, char *argv[])
 	FILE *procfd;
 	int delay = 50;
 	char tty[20] = "/dev/";
-	char arg_dummy;
+	int arg_dummy;
 	
 	if(argc < 3)
 	{
