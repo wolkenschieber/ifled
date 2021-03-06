@@ -1,8 +1,8 @@
-# InterfaceLED README file.
+# InterfaceLED
 
 ## What is it?
 
-InterfaceLED is a program that uses the keyboard LEDs to indicated various
+_InterfaceLED_ is a program that uses the keyboard LEDs to indicated various
 things about a specified interface. For example if a network card is sending
 or receiving data.
 

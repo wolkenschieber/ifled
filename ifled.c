@@ -30,7 +30,7 @@
 
 
 const char *banner = 
-		"ifled v0.6 - (c)1999 Mattias Wadman <napolium@sudac.org>\n"
+		"ifled v0.7 - (c)1999 Mattias Wadman <napolium@sudac.org>\n"
 		"This program is distributed under the terms of GPL.\n";
 const char *help = 
 		"%sUsage: %s tty interface [options]\n"
@@ -68,9 +68,8 @@ const char *help =
 #define IF_NONE		11
 
 #define OPT_FORK	1
-#define OPT_KERNEL_2_0	2
-#define OPT_INVERT	4
-#define OPT_ALTKBCODE	8
+#define OPT_INVERT	2
+#define OPT_ALTKBCODE	4
 
 unsigned long int if_info[8]; // current interface values.
 unsigned long int l_if_info[8]; // last interface values.
@@ -113,16 +112,14 @@ void update_netproc(char *interface)
 		if(strncmp(bp,interface,strlen(interface)) == 0 && *(bp+strlen(interface)) == ':' )
 		{
 			bp = bp+strlen(interface)+1;
-			if(options & OPT_KERNEL_2_0)
-				sscanf(bp,"%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
-						&if_info[IF_RX],&if_info[IF_ERR_RX],&if_info[IF_DROP_RX],
-						&dummy,&dummy,&if_info[IF_TX],&if_info[IF_ERR_TX],
-						&if_info[IF_DROP_TX],&dummy,&if_info[IF_COLL]);
-			else
-				sscanf(bp,"%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
-						&if_info[IF_RX],&dummy,&if_info[IF_ERR_RX],&if_info[IF_DROP_RX],
-						&dummy,&dummy,&dummy,&dummy,&if_info[IF_TX],&dummy,
-						&if_info[IF_ERR_TX],&if_info[IF_DROP_TX],&dummy,&if_info[IF_COLL]);	
+
+			/* From v2.1.97 kernels:
+			Inter-|   Receive                                                |  Transmit
+ 			 face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed
+			*/
+			sscanf(bp,"%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
+					&dummy,&if_info[IF_RX],&if_info[IF_ERR_RX],&if_info[IF_DROP_RX],&dummy,&dummy,&dummy,&dummy, // Receive
+					&dummy,&if_info[IF_TX],&if_info[IF_ERR_TX],&if_info[IF_DROP_TX],&dummy,&if_info[IF_COLL],&dummy,&dummy); // Transmit
 			fclose(procfd);
 			return;
 		}
@@ -212,7 +209,6 @@ int main(int argc, char *argv[])
 	FILE *procfd;
 	int delay = 50;
 	char tty[20] = "/dev/";
-	struct utsname uname_dummy;
 	char arg_dummy;
 	
 	if(argc < 3)
@@ -258,9 +254,6 @@ int main(int argc, char *argv[])
 				break;
 		}
 	}
-	uname(&uname_dummy);
-	if(strncmp(uname_dummy.release,"2.0",3) == 0)
-		options |= OPT_KERNEL_2_0;
 	strcat(tty,argv[1]);
 	if((ttyfd = open(tty,O_RDWR)) < 0)
 		freakout("Unable to open tty.");
