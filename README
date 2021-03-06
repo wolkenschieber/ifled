@@ -1,0 +1,84 @@
+InterfaceLED README file.
+
+What is it?
+-----------
+InterfaceLED is a program that uses the keybord LEDs to indicated various
+things about a specified interface. For example if a network card is sending
+or receiveing data.
+
+
+How do i install it?
+--------------------
+Put it into /usr/bin, /usr/sbin or some other directory.
+
+
+How do i use it?
+----------------
+Just run "ifled [tty here] [interface here]" to use the default settings.
+Use "console" as tty to use the current tty, as interface use the interface you
+would like to monitor eg: eth0, ppp0. To run the ifled in background add -f to
+the command line.
+
+Example command:
+ifled console eth0 -f
+
+You will probebly need to run ifled as root user.
+
+
+How do i config the LEDs? / How do i get ifled not to touch my num-lock etc?
+----------------------------------------------------------------------------
+Look in the list of options from the help (start ifled with no arguments).
+For exmaple "-c crt" will make num-lock indicate collisions, caps-lock indicate
+receiveing of data and scroll-lock indicate transmitting of data.
+
+A popular LED config is "-c nna" this will make num-lock and caps-lock work as
+normal (hopefully) and scroll-lock indicate activity (the interface is
+receiving or transmitting data)
+
+Note: You can't use arguments like "-ic nna", use "-i -c nna" insted. 
+
+
+How do i get the none option to work in console?
+------------------------------------------------
+If you can't use your (num,caps,scroll)-lock as normal when you use the none
+option on them, try the "-a" option it may work.
+
+
+How do i get the none option to work in X?
+------------------------------------------
+Run ifled before you start X with the same terminal and same user that you will
+start X with, this seams to work. Any other solution?, mail me.
+
+
+The keybord is weird, keys get stuck etc
+----------------------------------------
+Try to increase the LED update delay by use the -d parameter. 100ms should
+solve the problem, if not try to increase even more. Note that the LEDs will
+flash slower at higher LED update delays.
+
+
+How to i monitor more then one interface?
+-----------------------------------------
+Use the "n" option with the "-c" parameter for example:
+
+./ifled console eth0 -c nna -f  // Scroll-lock will flash on activity on eth0
+./ifled console eth1 -c nan -f  // Caps-lcok will flash on activity on eth1
+./ifled console eth2 -c ann -f  // Num-lock will flash on activity on eth2
+
+
+The LEDs does not work on some terminals
+----------------------------------------
+A user in most cases can't change the LED status on a terminal owned by another
+user even if you run ifled as root user, and I don't know why.
+
+Do you know more about this? Mail me.
+
+
+The terminal LEDs gets fu*ked up after i have run ifled
+-------------------------------------------------------
+Try to type "reset", this will do a terminal initialization.
+
+
+Have fun!, and remember to look away every half hour.
+Mattias Wadman <napolium@sudac.org>
+
