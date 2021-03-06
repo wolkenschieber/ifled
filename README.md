@@ -1,6 +1,7 @@
 # InterfaceLED
 
 [![Build](https://github.com/wolkenschieber/ifled/actions/workflows/build.yml/badge.svg)](https://github.com/wolkenschieber/ifled/actions/workflows/build.yml)
+[![CodeQL](https://github.com/wolkenschieber/ifled/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/wolkenschieber/ifled/actions/workflows/codeql-analysis.yml)
 
 ## What is it?
 
