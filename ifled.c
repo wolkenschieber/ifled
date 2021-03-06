@@ -99,7 +99,7 @@ void set_led(char mode,char flag)
 void update_netproc(char *interface)
 {
 	char b[255];
-	char dummy;
+	unsigned long dummy;
 	FILE *procfd;
 	if((procfd = fopen("/proc/net/dev","r")) == NULL)
 		freakout("Unable to open /proc/net/dev.");
@@ -267,7 +267,7 @@ int main(int argc, char *argv[])
 	if(options & OPT_FORK)
 		fork_program();
 	else
-		printf(banner);
+		printf("%s", banner);
 	signal(SIGINT,signal_handler);
 	signal(SIGTERM,signal_handler);  
 	update_netproc(argv[2]);
