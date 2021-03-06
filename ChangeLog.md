@@ -1,5 +1,10 @@
 # Change log
 
+## Version 0.6 to 0.7 (Mar 06 2021)
+
+* Parse format of kernel 2.1+
+* Dropped format of older kernels
+
 ## Version 0.5 to 0.6 (Dec 11 1999)
 
 * Rewrote much of the `update_netproc` code, now faster (?) and smaller
