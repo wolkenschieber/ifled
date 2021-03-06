@@ -1,5 +1,7 @@
 # InterfaceLED
 
+[![Build](https://github.com/wolkenschieber/ifled/actions/workflows/build.yml/badge.svg)](https://github.com/wolkenschieber/ifled/actions/workflows/build.yml)
+
 ## What is it?
 
 _InterfaceLED_ is a program that uses the keyboard LEDs to indicated various
