@@ -15,18 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
- *                                         
- * Last modified: 991211
- * 
+ *
  */
 
-#include <stdio.h>
-#include <string.h>
 #include <fcntl.h>
 #include <linux/kd.h>
-#include <sys/utsname.h>
 #include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/ioctl.h> 
+#include <sys/utsname.h>
 #include <unistd.h>
+
 
 const char *banner = 
 		"ifled v0.6 - (c)1999 Mattias Wadman <napolium@sudac.org>\n"
