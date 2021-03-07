@@ -19,20 +19,20 @@ Put it into `/usr/bin`, `/usr/sbin` or some other directory.
 
 Just run `ifled [tty here] [interface here]` to use the default settings.
 Use `console` as tty to use the current tty, as interface use the interface you
-would like to monitor eg: `eth0`, `ppp0`. To run the ifled in background add -f to
+would like to monitor eg: `eth0`, `ppp0`. To run the `ifled` in background add `-f` to
 the command line.
 
 Example command:
-```
-ifled console eth0 -f
+```bash
+ifled console eth0 -f 
 ```
 
-You will probably need to run ifled as root user.
+You will probably need to run ifled as `root` user.
 
 
 ## How do i config the LEDs? / How do i get ifled not to touch my num-lock etc?
 
-Look in the list of options from the help (start ifled with no arguments).
+Look in the list of options from the help (start `ifled` with no arguments).
 For example `-c crt` will make num-lock indicate collisions, caps-lock indicate
 receiving of data and scroll-lock indicate transmitting of data.
 
@@ -51,7 +51,7 @@ option on them, try the `-a` option it may work.
 
 ## How do i get the none option to work in X?
 
-Run ifled before you start X with the same terminal and same user that you will
+Run `ifled` before you start X with the same terminal and same user that you will
 start X with, this seams to work. Any other solution, open a discussion.
 
 
@@ -66,7 +66,7 @@ flash slower at higher LED update delays.
 
 Use the `n` option with the `-c` parameter for example:
 
-```
+```bash
 ./ifled console eth0 -c nna -f  # Scroll-lock will flash on activity on eth0
 ./ifled console eth1 -c nan -f  # Caps-lock will flash on activity on eth1
 ./ifled console eth2 -c ann -f  # Num-lock will flash on activity on eth2
@@ -75,7 +75,7 @@ Use the `n` option with the `-c` parameter for example:
 ## The LEDs does not work on some terminals
 
 A user in most cases can't change the LED status on a terminal owned by another
-user even if you run ifled as root user, and I don't know why.
+user even if you run `ifled` as root user, and I don't know why.
 
 Do you know more about this? Open a discussion.
 
