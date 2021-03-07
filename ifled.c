@@ -1,6 +1,7 @@
 /* 
  * ifled - InterfaceLED
  * Copyright (C)1999 Mattias Wadman <napolium@sudac.org>
+ *              2021 Wolkenschieber <https://wolkenschieber.github.io>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +31,8 @@
 
 
 const char *banner = 
-		"ifled v0.7 - (c)1999 Mattias Wadman <napolium@sudac.org>\n"
+		"ifled v0.8 - (c)1999 Mattias Wadman <napolium@sudac.org>\n"
+		"                2021 Wolkenschieber <https://wolkenschieber.github.io>\n"
 		"This program is distributed under the terms of GPL.\n";
 const char *help = 
 		"%sUsage: %s tty interface [options]\n"
@@ -83,16 +85,14 @@ void freakout(char *why)
 	exit(1);
 }
 
-void set_led(char mode,char flag)
-{
-	unsigned char last_leds;
-	ioctl(ttyfd,KDGETLED,&last_leds);
+char set_led(char leds, char mode,char flag)
+{	
 	if(options & OPT_INVERT)
 		mode = !mode;
-	if(mode)
-		ioctl(ttyfd,KDSETLED,last_leds|flag);
-	else
-		ioctl(ttyfd,KDSETLED,last_leds&~flag);
+	if(mode) 
+		return leds|flag;
+	else 
+		return leds&~flag;
 }
 
 void update_netproc(char *interface)
@@ -146,27 +146,31 @@ char is_changed(char temp)
 void update_leds(char *tty)
 {
 	char temp;
-	unsigned char real_status_leds[3] = {K_CAPSLOCK,K_NUMLOCK,K_SCROLLLOCK};
-	unsigned char real_status;
+	unsigned char led_values;
+	unsigned char status_leds[3] = {K_CAPSLOCK,K_NUMLOCK,K_SCROLLLOCK};
 	unsigned char leds[3] = {LED_NUM,LED_CAP,LED_SCR};
+
+	ioctl(ttyfd,KDGETLED,&led_values);
+
 	for(temp=0;temp < 3;temp++)
 	{
 		if(led_config[temp] == IF_NONE && options & OPT_ALTKBCODE)
 		{
-			ioctl(ttyfd,KDGKBLED,&real_status);
-			if(real_status & real_status_leds[temp])
-				set_led(TRUE,leds[temp]);
+			if(led_values & status_leds[temp])
+				led_values = set_led(led_values,TRUE,leds[temp]);
 			else
-				set_led(FALSE,leds[temp]);
+				led_values =  set_led(led_values,FALSE,leds[temp]);
 			continue;
 		}
 		else if(led_config[temp] == IF_NONE)
 			continue;
 		if(is_changed(led_config[temp]))
-			set_led(TRUE,leds[temp]);
+			led_values = set_led(led_values,TRUE,leds[temp]);
 		else
-			set_led(FALSE,leds[temp]);
+			led_values = set_led(led_values,FALSE,leds[temp]);
 	}
+
+	ioctl(ttyfd,KDSETLED,led_values);
 	memcpy(&l_if_info,&if_info,sizeof(if_info));
 }
 
