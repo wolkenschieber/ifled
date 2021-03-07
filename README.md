@@ -52,7 +52,7 @@ option on them, try the `-a` option it may work.
 ## How do i get the none option to work in X?
 
 Run ifled before you start X with the same terminal and same user that you will
-start X with, this seams to work. Any other solution?, mail me.
+start X with, this seams to work. Any other solution, open a discussion.
 
 
 ## The keyboard is weird, keys get stuck etc
@@ -77,7 +77,7 @@ Use the `n` option with the `-c` parameter for example:
 A user in most cases can't change the LED status on a terminal owned by another
 user even if you run ifled as root user, and I don't know why.
 
-Do you know more about this? Mail me.
+Do you know more about this? Open a discussion.
 
 
 ## The terminal LEDs gets fu*ked up after i have run ifled
@@ -86,5 +86,3 @@ Try to type `reset`, this will do a terminal initialization.
 
 
 Have fun!, and remember to look away every half hour.
-Mattias Wadman <napolium@sudac.org>
-
